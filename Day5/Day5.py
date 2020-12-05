@@ -1,6 +1,7 @@
 def parse_seatid(id):
     codes = {'F':'0', 'B':'1', 'L':'0', 'R':'1'}
     bin_id = ("").join([codes[s] for s in id[:-1]])
+    # could also be done with str.maketrans as reddit told me
     return int(bin_id[:7],2)*8+int(bin_id[7:],2)
 
 if __name__=='__main__':
