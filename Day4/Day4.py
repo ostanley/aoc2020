@@ -34,10 +34,7 @@ def check_passport(passport, part):
             valid = check_ecl(value)
         elif key=='hcl':
             key_count+=1
-            if len(value)==7:
-                valid = bool(re.search('#[0-9a-f]{6,}', value))
-            else:
-                valid = False
+            valid = bool(re.search('#[0-9a-f]{6,}', value)) if len(value)==7 else False
         elif key=='hgt':
             key_count+=1
             if value[-2:]=='cm':

@@ -8,11 +8,10 @@ def get_declarations(line):
 def compare_declarations(lines):
     if len(lines) == 1:
         return get_declarations(lines[0])
-    else:
-        declarations = get_declarations(lines[0])
-        for l in lines[1:]:
-            declarations = declarations.intersection(declarations, get_declarations(l))
-        return declarations
+    declarations = get_declarations(lines[0])
+    for l in lines[1:]:
+        declarations = declarations.intersection(declarations, get_declarations(l))
+    return declarations
 
 
 def main():
