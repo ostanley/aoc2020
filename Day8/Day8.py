@@ -41,7 +41,7 @@ def part2():
     with open('Day8input.txt', 'r') as f:
         lines = f.readlines()
 
-    switches = [True if 'nop' in s or 'jmp' in s else False for s in lines]
+    switches = ['nop' in s or 'jmp' in s for s in lines]
 
     for s in range(len(switches)):
         if switches[s]:

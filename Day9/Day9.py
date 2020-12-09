@@ -1,8 +1,5 @@
 def in_preamble(num_sum, preamble):
-    for val in preamble:
-        if num_sum-val in preamble:
-            return True
-    return False
+    return any(num_sum-val in preamble for val in preamble)
 
 
 def part1(preamble_length, file):
