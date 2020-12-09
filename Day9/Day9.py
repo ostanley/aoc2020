@@ -30,7 +30,6 @@ def part2(num, file):
         sum_end += 1
         if contiguous_sum == num:
             print(f'found sum string at {start_index} to {sum_end}')
-            sum_range = input[start_index:sum_end]
             print(f"ecryption weakness is {min(input[start_index:sum_end])}+"
                   f"{max(input[start_index:sum_end])}="
                   f"{min(input[start_index:sum_end])+max(input[start_index:sum_end])}")
