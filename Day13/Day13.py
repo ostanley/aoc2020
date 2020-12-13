@@ -53,14 +53,10 @@ def part2(file):
 
     for buses in range(len(sorted_bus_list)+1):
         if len(sorted_bus_list[:buses]) >= 2:
-            small_bus_list = {k:v for k,v in buses_to_time.items() if k in sorted_bus_list[:buses]}
-            small_bus_list, success, arr_time = search_for_time(small_bus_list, sorted_bus_list[:buses])
+            buses_to_time, success, arr_time = search_for_time(buses_to_time, sorted_bus_list[:buses])
             if not success:
                 print(f'Level {buses} did not converge')
                 break
-            for k,v in buses_to_time.items():
-                if k in small_bus_list.keys():
-                    buses_to_time[k]=small_bus_list[k]
     print(f'Convergence at {arr_time[0]}')
 
 
