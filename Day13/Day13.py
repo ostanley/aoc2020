@@ -1,6 +1,7 @@
 import math
 import numpy as np
 
+
 def part1(file):
     with open(file, 'r') as f:
         target_time = int(f.readline().strip())
@@ -21,18 +22,20 @@ def search_for_time(buses_to_time, sorted_bus_list):
     for i in range(100*sorted_bus_list[0]):
         arr_time = []
         for b in sorted_bus_list:
-            if b == sorted_bus_list[0] and len(sorted_bus_list)==2:
+            if b == sorted_bus_list[0] and len(sorted_bus_list) == 2:
                 buses_to_time[b][1] += 1
             elif b == sorted_bus_list[0]:
                 buses_to_time[b][1] += np.prod(sorted_bus_list[1:-1])
             else:
                 buses_to_time[b][1] = math.floor((buses_to_time[sorted_bus_list[0]][1]*sorted_bus_list[0] -
-                                                  buses_to_time[sorted_bus_list[0]][0] + buses_to_time[b][0])/b)
+                                                  buses_to_time[sorted_bus_list[0]][0] +
+                                                  buses_to_time[b][0])/b)
             arr_time.append(buses_to_time[b][1]*b - buses_to_time[b][0])
         if len(set(arr_time)) == 1:
             solved = True
             break
     return buses_to_time, solved, arr_time
+
 
 def part2(file):
     with open(file, 'r') as f:
@@ -44,8 +47,6 @@ def part2(file):
     for bus in bus_list:
         if bus != 'x':
             buses_to_time[int(bus)] = [bus_list.index(bus), 0]
-            if max_bus < int(bus):
-                max_bus = int(bus)
 
     sorted_bus_list = list(buses_to_time.keys())
     sorted_bus_list.sort()
@@ -53,7 +54,8 @@ def part2(file):
 
     for buses in range(len(sorted_bus_list)+1):
         if len(sorted_bus_list[:buses]) >= 2:
-            buses_to_time, success, arr_time = search_for_time(buses_to_time, sorted_bus_list[:buses])
+            buses_to_time, success, arr_time = search_for_time(
+                buses_to_time, sorted_bus_list[:buses])
             if not success:
                 print(f'Level {buses} did not converge')
                 break
