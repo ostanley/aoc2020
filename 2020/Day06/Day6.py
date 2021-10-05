@@ -16,19 +16,19 @@ def compare_declarations(lines):
 
 
 def main():
-    with open('Day6input.txt', 'r') as f:
+    with open("Day6input.txt", "r") as f:
         file = f.read()
 
-    file = file.split('\n\n')
+    file = file.split("\n\n")
 
     items_declared = 0
     items_declared_group = 0
     for l in file:
-        items_declared += len(get_declarations(l.replace('\n', '')))
-        items_declared_group += len(compare_declarations(l.strip('\n').split('\n')))
-    print(f'There are {items_declared} items among the passengers')
-    print(f'There are {items_declared_group} common items among the passenger groups')
+        items_declared += len(get_declarations(l.replace("\n", "")))
+        items_declared_group += len(compare_declarations(l.strip("\n").split("\n")))
+    print(f"There are {items_declared} items among the passengers")
+    print(f"There are {items_declared_group} common items among the passenger groups")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

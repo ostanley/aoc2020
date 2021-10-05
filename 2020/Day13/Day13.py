@@ -3,23 +3,25 @@ import numpy as np
 
 
 def part1(file):
-    with open(file, 'r') as f:
+    with open(file, "r") as f:
         target_time = int(f.readline().strip())
-        bus_list = [int(n.strip()) for n in f.readline().split(',') if n != 'x']
+        bus_list = [int(n.strip()) for n in f.readline().split(",") if n != "x"]
 
-    delay = max(bus_list)+1
+    delay = max(bus_list) + 1
     min_bus = 0
     for bus in bus_list:
-        if math.ceil(target_time/bus)*bus-target_time < delay:
-            delay = math.ceil(target_time/bus)*bus-target_time
+        if math.ceil(target_time / bus) * bus - target_time < delay:
+            delay = math.ceil(target_time / bus) * bus - target_time
             min_bus = bus
 
-    print(f'The fastest bus is: {min_bus} with {delay} and their product is {min_bus*delay}')
+    print(
+        f"The fastest bus is: {min_bus} with {delay} and their product is {min_bus*delay}"
+    )
 
 
 def search_for_time(buses_to_time, sorted_bus_list):
     solved = False
-    for i in range(100*sorted_bus_list[0]):
+    for i in range(100 * sorted_bus_list[0]):
         arr_time = []
         for b in sorted_bus_list:
             if b == sorted_bus_list[0] and len(sorted_bus_list) == 2:
@@ -27,10 +29,15 @@ def search_for_time(buses_to_time, sorted_bus_list):
             elif b == sorted_bus_list[0]:
                 buses_to_time[b][1] += np.prod(sorted_bus_list[1:-1])
             else:
-                buses_to_time[b][1] = math.floor((buses_to_time[sorted_bus_list[0]][1]*sorted_bus_list[0] -
-                                                  buses_to_time[sorted_bus_list[0]][0] +
-                                                  buses_to_time[b][0])/b)
-            arr_time.append(buses_to_time[b][1]*b - buses_to_time[b][0])
+                buses_to_time[b][1] = math.floor(
+                    (
+                        buses_to_time[sorted_bus_list[0]][1] * sorted_bus_list[0]
+                        - buses_to_time[sorted_bus_list[0]][0]
+                        + buses_to_time[b][0]
+                    )
+                    / b
+                )
+            arr_time.append(buses_to_time[b][1] * b - buses_to_time[b][0])
         if len(set(arr_time)) == 1:
             solved = True
             break
@@ -38,31 +45,32 @@ def search_for_time(buses_to_time, sorted_bus_list):
 
 
 def part2(file):
-    with open(file, 'r') as f:
+    with open(file, "r") as f:
         f.readline()
-        bus_list = [n.strip() for n in f.readline().split(',')]
+        bus_list = [n.strip() for n in f.readline().split(",")]
 
     buses_to_time = {}
     max_bus = 0
     for bus in bus_list:
-        if bus != 'x':
+        if bus != "x":
             buses_to_time[int(bus)] = [bus_list.index(bus), 0]
 
     sorted_bus_list = list(buses_to_time.keys())
     sorted_bus_list.sort()
     sorted_bus_list.reverse()
 
-    for buses in range(len(sorted_bus_list)+1):
+    for buses in range(len(sorted_bus_list) + 1):
         if len(sorted_bus_list[:buses]) >= 2:
             buses_to_time, success, arr_time = search_for_time(
-                buses_to_time, sorted_bus_list[:buses])
+                buses_to_time, sorted_bus_list[:buses]
+            )
             if not success:
-                print(f'Level {buses} did not converge')
+                print(f"Level {buses} did not converge")
                 break
-    print(f'Convergence at {arr_time[0]}')
+    print(f"Convergence at {arr_time[0]}")
 
 
 if __name__ == "__main__":
-    file = 'Day13input.txt'
+    file = "Day13input.txt"
     part1(file)
     part2(file)

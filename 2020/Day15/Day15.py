@@ -1,10 +1,9 @@
-
 def memory_game(input, iters):
     number_spoken = 0
     memory = {}
     for i in range(iters):
         if i % 1000000 == 0:
-            print(f'Turn {i}')
+            print(f"Turn {i}")
         if len(input) != 0:
             out_loud = input.pop(0)
             memory[out_loud] = [i]
@@ -26,13 +25,13 @@ def memory_game(input, iters):
         # print(memory)
         number_spoken = out_loud
 
-    print(f'Final number spoken {number_spoken}')
+    print(f"Final number spoken {number_spoken}")
     return number_spoken
 
 
-if __name__ == '__main__':
-    starting_string='12,1,16,3,11,0'
-    input = [int(x) for x in starting_string.split(',')]
+if __name__ == "__main__":
+    starting_string = "12,1,16,3,11,0"
+    input = [int(x) for x in starting_string.split(",")]
     iters = 2020
     memory_game(input, iters)
     iters = 30000000

@@ -1,6 +1,7 @@
 import re
 from itertools import product
 
+
 def parse_rules(rules):
     rule_dict = {}
 
@@ -8,11 +9,13 @@ def parse_rules(rules):
         rule_list = r.split(": ")
         if re.match('"[a-z]*"', rule_list[1]):
             rule_dict[int(rule_list[0])] = rule_list[1][1:-1]
-        elif '|' in rule_list[1]:
-            rule_dict[int(rule_list[0])] = [x.split(' ') for x in rule_list[1].split(' | ')]
+        elif "|" in rule_list[1]:
+            rule_dict[int(rule_list[0])] = [
+                x.split(" ") for x in rule_list[1].split(" | ")
+            ]
         else:
             rule_dict[int(rule_list[0])] = rule_list[1].split(" ")
-    return(rule_dict)
+    return rule_dict
 
 
 def search_rules(rule_dict, start_key):
@@ -33,8 +36,9 @@ def search_rules(rule_dict, start_key):
             string_list[1] += search_rules(rule_dict, int(k))
         return string_list
 
+
 def make_strings(string_list):
-    strings = ['']*2**(depth(string_list)-1)
+    strings = [""] * 2 ** (depth(string_list) - 1)
     print(len(strings))
 
 
@@ -46,18 +50,19 @@ def depth(l):
 
 
 def main(file):
-    with open(file, 'r') as f:
+    with open(file, "r") as f:
         data = f.read()
 
-    [rules, input] = data.split('\n\n')
+    [rules, input] = data.split("\n\n")
 
-    rule_dict = parse_rules(rules.strip().split('\n'))
+    rule_dict = parse_rules(rules.strip().split("\n"))
     print(rule_dict)
 
     string_list = search_rules(rule_dict, 0)
     print(string_list)
     make_strings(string_list)
 
-if __name__ == '__main__':
-    file = 'Day19testinput.txt'
+
+if __name__ == "__main__":
+    file = "Day19testinput.txt"
     main(file)
