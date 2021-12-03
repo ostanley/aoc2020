@@ -1,25 +1,30 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class Submarine:
-    def __init__(self) -> None:
-        self.horiz = 0
-        self.depth = 0
-        self.aim = 0
+    horiz: int = 0
+    depth: int = 0
+    aim: int = 0
 
-    def move_sub_p1(self, instruction) -> None:
-        if instruction[0] == "forward":
-            self.horiz += int(instruction[1])
-        elif instruction[0] == "up":
-            self.depth -= int(instruction[1])
-        if instruction[0] == "down":
-            self.depth += int(instruction[1])
+    def move_sub(self, dir, dist, mode) -> None:
+        if dir == "forward":
+            self.horiz += dist
+            self.depth += dist * self.aim
+        elif mode == "p1":
+            self.adjust_depth(dir, dist)
+        else:
+            self.adjust_aim(dir, dist)
 
-    def move_sub_p2(self, instruction) -> None:
-        if instruction[0] == "forward":
-            self.horiz += int(instruction[1])
-            self.depth += int(instruction[1]) * self.aim
-        elif instruction[0] == "up":
-            self.aim -= int(instruction[1])
-        if instruction[0] == "down":
-            self.aim += int(instruction[1])
+    def adjust_aim(self, dir, dist) -> None:
+        if dir == "up":
+            dist *= -1
+        self.aim += dist
+
+    def adjust_depth(self, dir, dist) -> None:
+        if dir == "up":
+            dist *= -1
+        self.depth += dist
 
 
 if __name__ == "__main__":
@@ -28,8 +33,9 @@ if __name__ == "__main__":
         sub = Submarine()
         sub2 = Submarine()
         for line in l:
-            sub.move_sub_p1(line.strip().split(" "))
-            sub2.move_sub_p2(line.strip().split(" "))
+            instructions = line.strip().split(" ")
+            sub.move_sub(instructions[0], int(instructions[1]), "p1")
+            sub2.move_sub(instructions[0], int(instructions[1]), "p2")
 
     print(f"Sub 1 is at {sub.horiz, sub.depth} with product {sub.horiz*sub.depth}")
 
