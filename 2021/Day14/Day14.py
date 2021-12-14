@@ -32,6 +32,19 @@ def count_polymer(polymer):
     return freq_dict
 
 
+def run_sim(steps, polymer_rules, polymer):
+    for s in range(steps):
+        polymer = grow_polymer(polymer, polymer_rules)
+
+    polymer_letters = count_polymer(polymer)
+    for k, v in polymer_letters.items():
+        if k == polymer_string[-1] or k == polymer_string[0]:
+            polymer_letters[k] = (v + 1) // 2
+        else:
+            polymer_letters[k] = v // 2
+    return polymer_letters
+
+
 if __name__ == "__main__":
     with open("Day14input.txt", "r") as f:
         polymer_string = f.readline().strip()
@@ -44,17 +57,8 @@ if __name__ == "__main__":
             k, v = l.strip().split(" -> ")
             polymer_rules[k] = v
 
-    steps = 40
-    for s in range(steps):
-        polymer = grow_polymer(polymer, polymer_rules)
+    polymer_letters = run_sim(10, polymer_rules, polymer.copy())
+    print(max(polymer_letters.values()) - min(polymer_letters.values()))
 
-    polymer_letters = count_polymer(polymer)
-    for k, v in polymer_letters.items():
-        if k == polymer_string[-1]:
-            polymer_letters[k] = (v + 1) / 2
-        else:
-            polymer_letters[k] = v / 2
-
-    print(sum(polymer_letters.values()))
-    print(polymer_letters)
+    polymer_letters = run_sim(40, polymer_rules, polymer.copy())
     print(max(polymer_letters.values()) - min(polymer_letters.values()))
