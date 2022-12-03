@@ -1,15 +1,9 @@
+from core.reader import read_line
+
 rules = {"A": "X", "B": "Y", "C": "Z"}
 scores = {"X": 1, "Y": 2, "Z": 3}
 wins_against = {"X": "Z", "Y": "X", "Z": "Y"}
 loses_against = {v: k for k, v in wins_against.items()}
-
-
-def read_line(filename, processor):
-    total = 0
-    with open(filename, "r") as f:
-        for line in f:
-            total += processor(line.strip())
-    return total
 
 
 def calc_game(line):
@@ -33,6 +27,6 @@ def rig_game(line):
 
 
 if __name__ == "__main__":
-    filename = "Day02input.txt"
+    filename = "Day02/Day02input.txt"
     print(f"Part 1: {read_line(filename, calc_game)}")
     print(f"Part 2: {read_line(filename, rig_game)}")
